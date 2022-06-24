@@ -8,4 +8,6 @@ export const carouselImages = {
       "https://firebasestorage.googleapis.com/v0/b/vincethekids.appspot.com/o/carousel%2Fimage_6.jpg?alt=media&token=baec4b1c-75f1-4227-ba57-914e06302787",
       "https://firebasestorage.googleapis.com/v0/b/vincethekids.appspot.com/o/carousel%2Fimage_7.jpg?alt=media&token=6b9f2b3a-4843-46f1-a233-ea6a6fac86ef"
     ]
-  }
+}
+
+export const BASE_URL: string = "http://localhost:3000/api"
