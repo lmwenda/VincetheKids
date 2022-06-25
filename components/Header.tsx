@@ -1,18 +1,29 @@
 import { motion } from 'framer-motion';
 import { NextComponentType } from 'next';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
+import { auth } from '../utils/firebase';
 
-export const Header: NextComponentType = () => {
+export const Header: NextComponentType = (): JSX.Element => {
   const [active, setActive] = useState<boolean>(false);
   const [ token, setToken ] = useState<string>("");
+
+  const reloadPage: Function = (): void => {
+    return window.location.reload();
+  }
   
-  const handleClick = () => {
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (): void => {
     setActive(!active);
   };
 
-  useEffect(() => {
-    const _token: any = localStorage.getItem("token");
+  const signOut: MouseEventHandler<HTMLAnchorElement> = (): void => {
+    auth.signOut();
+    localStorage.removeItem("vtc-token");
+    reloadPage();
+  }
+
+  useEffect((): void => {
+    const _token: any = localStorage.getItem("vtc-token");
     setToken(JSON.parse(_token));
   }, [])
 
@@ -64,19 +75,36 @@ export const Header: NextComponentType = () => {
               </a>
             </Link>
 
+            {
+              token ? (
+                <div className='flex flex-col md:flex-row'>
+                  <Link href='/gallery'>
+                    <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
+                      Gallery
+                    </a>
+                  </Link>
 
+                  <a onClick={signOut} className='lg:inline-flex cursor-pointer lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
+                    Signout
+                  </a>
+                </div>
+              ) : (
+              <div className='flex flex-col md:flex-row'>
+                <Link href='/login'>
+                  <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
+                    Login
+                  </a>
+                </Link>
 
-            <Link href='/login'>
-              <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
-                Login
-              </a>
-            </Link>
+                <Link href='/register'>
+                  <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
+                    Register
+                  </a>
+                </Link>
+              </div>
+              )
+            }
 
-             <Link href='/register'>
-              <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
-                Register
-              </a>
-            </Link>
            </div>
         </motion.div>
       </nav>

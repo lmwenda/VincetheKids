@@ -1,44 +1,47 @@
-import Router from 'next/router';
-import React, { useState } from 'react'
-import { BASE_URL } from '../../utils/exportedDefinitions';
+import { useRouter } from 'next/router';
+import { auth } from '../../utils/firebase';
+import React, { ChangeEventHandler, MouseEventHandler, useState } from 'react'
+import { signInWithEmailAndPassword, getIdToken, UserCredential } from "firebase/auth";
 
-const Login = ({ token }: any) => {
+const Login = () => {
+
+  const navigate = useRouter();
 
   const [ message, setMessage ] = useState<string>("");
   const [ email, setEmail ] = useState<string>("");
+  const [ loading, setLoading ] = useState<boolean>(false);
   const [ password, setPassword ] = useState<string>("");
+  const [ submittedForm, setSubmittedForm ] = useState<boolean>(false);
 
-  const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+  const emailHandler: ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value);
+  const passwordHandler: ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
 
-  const loginUser = async(e: React.FormEvent) => {
+  const loginUser: MouseEventHandler<HTMLButtonElement> = async(e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setSubmittedForm(true);
 
-    const user = {
-      email: email,
-      password: password
-    }
+    setLoading(true);
 
-    const response = await fetch(BASE_URL + "/users/login", 
-    {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)  
-    });
+    const user: UserCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    const data = await response.json();
-    setMessage(data.message);
+    localStorage.setItem("vtc-token", JSON.stringify(await getIdToken(user.user)))
 
-    if(data.payload.jwt_token){
-      localStorage.setItem("vtk-token", data.payload.jwt_token);
-      console.log(data.payload.user);
-      Router.push(`/gallery`)
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      Router.reload();
-    }
+
+    if (user) return setMessage("Successfully Logged In");
+    if (!user) return setMessage("Invalid Email or Password")
+
+    setLoading(false);
+}
+
+React.useEffect((): void => {
+  const token: string | null = localStorage.getItem("vtc-token");
+  const redirectIfLoggedIn: Function = () => {
+    if(token) return navigate.push("/");
+    window.location.reload();
   }
+
+  redirectIfLoggedIn();
+})
 
   return (
     <div className='md:pt-16'>

@@ -1,9 +1,20 @@
 
+import { NextComponentType } from "next";
 import React from "react";
 import { Zoom } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 
-const Slideshow = () => {
+interface T{
+	indicators: boolean,
+	scale: number,
+	duration: number,
+	transitionDuration: number,
+	infinite: boolean,
+	prevArrow: JSX.Element,
+	nextArrow: JSX.Element
+}
+
+const Slideshow: NextComponentType = (): JSX.Element => {
 	//Array of Images
 	const images = [
 		"https://firebasestorage.googleapis.com/v0/b/vincethekids.appspot.com/o/carousel%2Fimage_6.jpg?alt=media&token=baec4b1c-75f1-4227-ba57-914e06302787",
@@ -13,7 +24,7 @@ const Slideshow = () => {
 	];
 
 	//These are custom properties for zoom effect while slide-show
-	const zoomInProperties = {
+	const zoomInProperties: T = {
 		indicators: true,
 		scale: 1.2,
 		duration: 5000,

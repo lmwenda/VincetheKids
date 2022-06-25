@@ -1,4 +1,8 @@
-export const carouselImages = {
+interface CarouselImagesTypes {
+  resources: Array<string>
+}
+
+export const carouselImages: CarouselImagesTypes = {
     resources: [
       "https://firebasestorage.googleapis.com/v0/b/vincethekids.appspot.com/o/carousel%2Fimage_1.jpg?alt=media&token=6f662348-8207-475b-aa18-18fbf9a544f5",
       "https://firebasestorage.googleapis.com/v0/b/vincethekids.appspot.com/o/carousel%2Fimage_2.jpg?alt=media&token=f7a3b4cf-482f-42d6-9655-d164dcba6c79",
