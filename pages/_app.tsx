@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import { motion } from 'framer-motion';
 import type { AppProps } from 'next/app'
 import { Header } from '../components/Header'
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -13,6 +14,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         opacity: 1
       },
     }}>
+      <Head>
+        <link rel="icon" href="/image_5.jpg" />
+      </Head>
       <Header />
       <Component {...pageProps} />
     </motion.div>
