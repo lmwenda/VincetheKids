@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { Attributes, useState } from "react";
+import React, { useState } from "react";
 import withAuth from "../../components/ProtectedURL";
 import { database } from "../../utils/firebase";
 import Image from "next/image";

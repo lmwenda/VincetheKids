@@ -11,14 +11,12 @@ const Login = () => {
   const [ email, setEmail ] = useState<string>("");
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ password, setPassword ] = useState<string>("");
-  const [ submittedForm, setSubmittedForm ] = useState<boolean>(false);
 
   const emailHandler: ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value);
   const passwordHandler: ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => setPassword(e.target.value);
 
   const loginUser: MouseEventHandler<HTMLButtonElement> = async(e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    setSubmittedForm(true);
 
     setLoading(true);
 
@@ -36,30 +34,27 @@ const Login = () => {
 React.useEffect((): void => {
   const token: string | null = localStorage.getItem("vtc-token");
   const redirectIfLoggedIn: Function = () => {
-    if(token) return navigate.push("/");
-    window.location.reload();
+    if(token) {
+      window.location.reload();
+      return navigate.push("/");
+    }
   }
 
   redirectIfLoggedIn();
 })
 
   return (
-    <div className='md:pt-16'>
+    <div className="m-14 flex flex-col mx-auto w-96  justify-center items-center md:w-[30vw]">
 
-      <h1 className='text-4xl'>Login</h1>
-      <form className="flex flex-col space-y-5 mt-10 items-center">
-      
-        <label className="text-center justify-center text-red">{message}</label>
-        
-        <label className="w-[80vw] text-left md:w-[50vw]">Email</label>
-        <input className="border border-gray-300 w-[80vw] p-2 rounded sm:w-[50vw]" onChange={emailHandler} type="email" />
+      {
+        <p>{message}</p>
+      }
 
-        <label className="w-[80vw] text-left md:w-[50vw]">Password</label>
-        <input className="border border-gray-300 w-[80vw] p-2 rounded sm:w-[50vw]" type="password" onChange={passwordHandler} />
-    
-        <button onClick={loginUser} className="p-2 bg-gray-500 border border-gray-500 text-white rounded w-[90vw] sm:w-[50vw]">
-          Login
-        </button>
+      <form className="m-5 flex flex-col space-y-10 justify-center items-center w-full md:w-[30vw]">
+          <h1 className="text-center text-3xl">Login</h1>
+          <input className="p-3 border border-gray-300 rounded w-96" placeholder="Email:" onChange={emailHandler} type="email" />
+          <input type="password" className="border p-3 border-gray-300 rounded w-96" onChange={passwordHandler} placeholder="Password:" />
+          <button className="bg-gray-300 text-white p-3 rounded w-96" onClick={loginUser}>Register</button>
       </form>
     </div>
   )

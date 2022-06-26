@@ -16,7 +16,7 @@ export const Header: NextComponentType = (): JSX.Element => {
     setActive(!active);
   };
 
-  const signOut: MouseEventHandler<HTMLAnchorElement> = (): void => {
+  const signOut = (): void => {
     auth.signOut();
     localStorage.removeItem("vtc-token");
     reloadPage();
@@ -69,11 +69,11 @@ export const Header: NextComponentType = (): JSX.Element => {
               </a>
             </Link>
 
-            <Link href='/contact'>
+            {/* <Link href='/contact'>
               <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-black items-center justify-center hover:text-blue-500'>
                Contact 
               </a>
-            </Link>
+            </Link> */}
 
             {
               token ? (

@@ -2,6 +2,11 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
 
+type BodyInput = {
+    email: string,
+    message: string
+}
+
 const Contact: NextPage = (): JSX.Element => {
 
     const [ email, setEmail ] = useState<string>("");
@@ -10,10 +15,23 @@ const Contact: NextPage = (): JSX.Element => {
     const emailHandler: ChangeEventHandler<HTMLInputElement> = (e: React.ChangeEvent<HTMLInputElement>): void => setEmail(e.target.value)
     const messageHandler: ChangeEventHandler<HTMLTextAreaElement> = (e: React.ChangeEvent<HTMLTextAreaElement>): void => setMessage(e.target.value);
 
-    const sendEmail: MouseEventHandler<HTMLButtonElement> = (e: React.FormEvent): void => {
+    const sendEmail: MouseEventHandler<HTMLButtonElement> = async(e: React.FormEvent): Promise<void> => {
         e.preventDefault();
 
-        
+        const bodyInput: BodyInput  = {
+            email,
+            message
+        }
+
+        const data: string = JSON.stringify(bodyInput);
+
+        const response: Response = await fetch("/api/mail", {
+            method: "POST",
+            body: data
+        });
+
+        const returnedData: Promise<JSON> = await response.json();
+        console.log(returnedData);
     }
 
 
