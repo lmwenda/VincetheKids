@@ -50,7 +50,7 @@ const Register = () => {
 
   <form className="m-5 flex flex-col space-y-10 justify-center items-center w-full md:w-[30vw]">
       <h1 className="text-center text-3xl">Register</h1>
-      <p className="text-lg text-center text-gray-500">Create an Account and view VincetheKid's Gallery as soon as possible...</p>
+      <p className="text-lg text-center text-gray-500">Create an Account and view VincetheKid&apos;s Gallery as soon as possible...</p>
       <input className="p-3 border border-gray-300 rounded w-96" placeholder="Email:" onChange={emailHandler} type="email" />
       <input type="password" className="border p-3 border-gray-300 rounded w-96" onChange={passwordHandler} placeholder="Password:" />
       <button className="bg-gray-300 text-white p-3 rounded w-96" onClick={(e: React.FormEvent) => onRegister(e)}>Register</button>

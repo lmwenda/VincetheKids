@@ -42,7 +42,7 @@ const Contact: NextPage = (): JSX.Element => {
 
                 <form className="m-5 flex flex-col space-y-10 justify-center items-center w-full md:w-[30vw]">
                     <h1 className="text-center text-3xl">Contact Us</h1>
-                    <p className="text-lg text-center text-gray-500">Send us a message and we'll try get back as soon as possible...</p>
+                    <p className="text-lg text-center text-gray-500">Send us a message and we&apos;ll try get back as soon as possible...</p>
                     <input className="p-3 border border-gray-300 rounded w-96" placeholder="Email:" onChange={emailHandler} type="email" />
                     <textarea className="border p-3 border-gray-300 rounded w-96" onChange={messageHandler} placeholder="Message:" />
                     <button className="bg-gray-300 text-white p-3 rounded w-96" onClick={sendEmail}>Send</button>

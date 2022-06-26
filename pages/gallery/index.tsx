@@ -37,7 +37,7 @@ const GalleryPage: NextPage = (): JSX.Element => {
       <div className="mx-10 my-3 flex flex-col space-y-10 justify-center items-center md:justify-start md:space-y-0 md:flex-row md:space-x-5">
         {
           albums.map((album: firebase.firestore.DocumentData) => (
-            <motion.div className="flex flex-col cursor-pointer  w-96 rounded justify-center items-center" whileHover={{
+            <motion.div key={album.key} className="flex flex-col cursor-pointer  w-96 rounded justify-center items-center" whileHover={{
               position: "relative",
               zIndex: 1,
               background: "white",
